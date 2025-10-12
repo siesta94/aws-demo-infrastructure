@@ -53,48 +53,48 @@ output "alb_zone_id" {
 # ECS Outputs
 output "ecs_cluster_name" {
   description = "Name of the ECS cluster"
-  value       = module.ecs_fargate.cluster_name
+  value       = module.ecs_cluster.cluster_name
 }
 
-output "ecs_service_name" {
-  description = "Name of the ECS service"
-  value       = module.ecs_fargate.service_name
+output "ecs_backend_service_name" {
+  description = "Name of the ECS backend service"
+  value       = module.ecs_backend_service.service_name
 }
 
 # CloudFront Outputs
-output "cloudfront_distribution_id" {
-  description = "ID of the CloudFront distribution"
-  value       = module.cloudfront_s3.cloudfront_distribution_id
-}
+# output "cloudfront_distribution_id" {
+#   description = "ID of the CloudFront distribution"
+#   value       = module.cloudfront_s3.cloudfront_distribution_id
+# }
 
-output "cloudfront_domain_name" {
-  description = "Domain name of the CloudFront distribution"
-  value       = module.cloudfront_s3.cloudfront_domain_name
-}
+# output "cloudfront_domain_name" {
+#   description = "Domain name of the CloudFront distribution"
+#   value       = module.cloudfront_s3.cloudfront_domain_name
+# }
 
-output "s3_bucket_id" {
-  description = "ID of the S3 bucket for frontend"
-  value       = module.cloudfront_s3.s3_bucket_id
-}
+# output "s3_bucket_id" {
+#   description = "ID of the S3 bucket for frontend"
+#   value       = module.cloudfront_s3.s3_bucket_id
+# }
 
 # API Gateway Outputs
-output "api_gateway_invoke_url" {
-  description = "Invoke URL of the API Gateway"
-  value       = module.api_gateway.stage_invoke_url
-}
+# output "api_gateway_invoke_url" {
+#   description = "Invoke URL of the API Gateway"
+#   value       = module.api_gateway.stage_invoke_url
+# }
 
-output "api_gateway_id" {
-  description = "ID of the API Gateway"
-  value       = module.api_gateway.api_id
-}
+# output "api_gateway_id" {
+#   description = "ID of the API Gateway"
+#   value       = module.api_gateway.api_id
+# }
 
 # Lambda Outputs
-output "lambda_function_name" {
-  description = "Name of the Lambda function"
-  value       = module.lambda_api.function_name
-}
+# output "lambda_function_name" {
+#   description = "Name of the Lambda function"
+#   value       = module.lambda_api.function_name
+# }
 
-output "lambda_function_arn" {
-  description = "ARN of the Lambda function"
-  value       = module.lambda_api.function_arn
-}
+# output "lambda_function_arn" {
+#   description = "ARN of the Lambda function"
+#   value       = module.lambda_api.function_arn
+# }
