@@ -1,0 +1,28 @@
+# Development Environment Configuration
+# Copy this file to terraform.tfvars and adjust values as needed
+
+# AWS Configuration
+aws_region = "us-east-1"
+
+# Project Configuration
+project_name = "myapp"
+environment  = "dev"
+owner        = "DevTeam"
+
+# Network Configuration
+vpc_cidr = "10.0.0.0/16"
+availability_zones = [
+  "us-east-1a",
+  "us-east-1b"
+]
+
+# Database Configuration
+db_name     = "appdb"
+db_username = "dbadmin"
+
+# Container Configuration
+container_image = "nginx:latest"  # Replace with your actual Docker image
+
+# Lambda Configuration (optional)
+# lambda_filename         = "path/to/lambda.zip"
+# lambda_source_code_hash = "base64-encoded-sha256-hash"
