@@ -39,7 +39,7 @@ resource "aws_secretsmanager_secret_version" "db_master_password" {
 
 # DB Subnet Group
 resource "aws_db_subnet_group" "main" {
-  name_prefix = "${var.project_name}-${var.environment}-"
+  name        = "${var.project_name}-${var.environment}-db-subnet-group"
   description = "Database subnet group for ${var.project_name} ${var.environment}"
   subnet_ids  = var.subnet_ids
 
@@ -67,8 +67,9 @@ resource "aws_rds_cluster_parameter_group" "main" {
   }
 
   parameter {
-    name  = "shared_preload_libraries"
-    value = "pg_stat_statements"
+    name         = "shared_preload_libraries"
+    value        = "pg_stat_statements"
+    apply_method = "pending-reboot"
   }
 
   tags = var.common_tags
@@ -147,7 +148,8 @@ resource "aws_rds_cluster" "main" {
 
   lifecycle {
     ignore_changes = [
-      final_snapshot_identifier
+      final_snapshot_identifier,
+      availability_zones
     ]
   }
 }
@@ -160,10 +162,10 @@ resource "aws_rds_cluster_instance" "primary" {
   engine                  = aws_rds_cluster.main.engine
   engine_version          = aws_rds_cluster.main.engine_version
   
-  # Performance
-  performance_insights_enabled    = var.performance_insights_enabled
-  performance_insights_kms_key_id = var.performance_insights_kms_key_id
-  performance_insights_retention_period = var.performance_insights_retention_period
+  # Performance Insights (only set related attributes if enabled)
+  performance_insights_enabled          = var.performance_insights_enabled
+  performance_insights_kms_key_id       = var.performance_insights_enabled ? var.performance_insights_kms_key_id : null
+  performance_insights_retention_period = var.performance_insights_enabled ? var.performance_insights_retention_period : null
   
   # Monitoring
   monitoring_interval = var.monitoring_interval
@@ -195,10 +197,10 @@ resource "aws_rds_cluster_instance" "replica" {
   engine             = aws_rds_cluster.main.engine
   engine_version     = aws_rds_cluster.main.engine_version
   
-  # Performance
-  performance_insights_enabled    = var.performance_insights_enabled
-  performance_insights_kms_key_id = var.performance_insights_kms_key_id
-  performance_insights_retention_period = var.performance_insights_retention_period
+  # Performance Insights (only set related attributes if enabled)
+  performance_insights_enabled          = var.performance_insights_enabled
+  performance_insights_kms_key_id       = var.performance_insights_enabled ? var.performance_insights_kms_key_id : null
+  performance_insights_retention_period = var.performance_insights_enabled ? var.performance_insights_retention_period : null
   
   # Monitoring
   monitoring_interval = var.monitoring_interval
