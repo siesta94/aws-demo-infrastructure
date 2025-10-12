@@ -22,6 +22,11 @@ output "lambda_security_group_id" {
   value       = aws_security_group.lambda.id
 }
 
+output "redis_security_group_id" {
+  description = "ID of the Redis security group"
+  value       = aws_security_group.redis.id
+}
+
 output "vpc_endpoints_security_group_id" {
   description = "ID of the VPC endpoints security group"
   value       = var.create_vpc_endpoints_sg ? aws_security_group.vpc_endpoints[0].id : null

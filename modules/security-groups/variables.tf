@@ -35,13 +35,19 @@ variable "ecs_task_port" {
 }
 
 variable "rds_port" {
-  description = "Port on which RDS listens"
+  description = "Port for RDS database"
   type        = number
   default     = 5432
 }
 
+variable "redis_port" {
+  description = "Port for Redis"
+  type        = number
+  default     = 6379
+}
+
 variable "create_vpc_endpoints_sg" {
-  description = "Whether to create security group for VPC endpoints"
+  description = "Create security group for VPC endpoints"
   type        = bool
   default     = false
 }

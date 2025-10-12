@@ -190,6 +190,53 @@ resource "aws_security_group" "lambda" {
   }
 }
 
+# Security Group for ElastiCache Redis
+resource "aws_security_group" "redis" {
+  name_prefix = "${var.project_name}-${var.environment}-redis-"
+  description = "Security group for ElastiCache Redis"
+  vpc_id      = var.vpc_id
+
+  # Ingress from ECS tasks
+  ingress {
+    description     = "Redis from ECS tasks"
+    from_port       = var.redis_port
+    to_port         = var.redis_port
+    protocol        = "tcp"
+    security_groups = [aws_security_group.ecs_tasks.id]
+  }
+
+  # Ingress from Lambda functions
+  ingress {
+    description     = "Redis from Lambda"
+    from_port       = var.redis_port
+    to_port         = var.redis_port
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lambda.id]
+  }
+
+  # Allow communication within Redis security group (for replication)
+  ingress {
+    description = "Allow Redis cluster communication"
+    from_port   = var.redis_port
+    to_port     = var.redis_port
+    protocol    = "tcp"
+    self        = true
+  }
+
+  # No egress rules needed for Redis
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "${var.project_name}-${var.environment}-redis-sg"
+    }
+  )
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 # Security Group for VPC Endpoints (optional, for AWS service access)
 resource "aws_security_group" "vpc_endpoints" {
   count       = var.create_vpc_endpoints_sg ? 1 : 0
