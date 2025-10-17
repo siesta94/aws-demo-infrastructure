@@ -1,28 +1,97 @@
-# Development Environment Configuration
-# Copy this file to terraform.tfvars and adjust values as needed
+# Development Environment Configuration Example
+# Copy this file to terraform.tfvars and customize for your needs
 
-# AWS Configuration
-aws_region = "us-east-1"
-
-# Project Configuration
+# Basic Configuration
+aws_region   = "us-east-1"
 project_name = "myapp"
 environment  = "dev"
 owner        = "DevTeam"
 
-# Network Configuration
-vpc_cidr = "10.0.0.0/16"
-availability_zones = [
-  "us-east-1a",
-  "us-east-1b"
-]
+# VPC Configuration
+vpc_cidr           = "10.0.0.0/16"
+availability_zones = ["us-east-1a", "us-east-1b"]
 
-# Database Configuration
+# Database Configuration (if deploying RDS)
 db_name     = "appdb"
 db_username = "dbadmin"
 
-# Container Configuration
-container_image = "nginx:latest"  # Replace with your actual Docker image
+# Container Configuration (if deploying ECS)
+container_image = "nginx:latest"
 
-# Lambda Configuration (optional)
+# Lambda Configuration (if deploying Lambda)
 # lambda_filename         = "path/to/lambda.zip"
 # lambda_source_code_hash = "base64-encoded-sha256-hash"
+
+# MongoDB Atlas Configuration (if deploying MongoDB)
+# mongodb_atlas_org_id = "your-mongodb-atlas-org-id"
+# mongodb_password     = "your-secure-password"
+
+# ============================================================================
+# MODULE DEPLOYMENT CONTROL
+# ============================================================================
+# Toggle modules on/off based on your needs
+# Default: Only EKS is enabled
+
+# Kubernetes (EKS)
+deploy_eks = true
+
+# Container Services (ECS)
+deploy_ecs_cluster  = false
+deploy_ecs_services = false  # Requires: deploy_ecs_cluster=true, deploy_alb=true
+
+# Databases
+deploy_rds = false  # RDS Aurora PostgreSQL
+
+# Load Balancing
+deploy_alb = false  # Application Load Balancer (required for ECS services)
+
+# Serverless
+deploy_lambda      = false
+deploy_api_gateway = false  # Requires: deploy_lambda=true
+
+# Caching & NoSQL
+deploy_redis          = false  # ElastiCache Redis
+deploy_mongodb_atlas  = false  # MongoDB Atlas (requires mongodb_atlas_org_id)
+
+# CDN & Storage
+deploy_cloudfront_s3 = false  # CloudFront + S3 for static websites
+
+# ============================================================================
+# DEPLOYMENT EXAMPLES
+# ============================================================================
+
+# Example 1: EKS Only (Default - Minimal Cost)
+# deploy_eks = true
+# All others = false
+
+# Example 2: ECS Stack
+# deploy_ecs_cluster  = true
+# deploy_ecs_services = true
+# deploy_alb          = true
+# deploy_rds          = true
+# deploy_redis        = true
+# deploy_eks          = false
+
+# Example 3: Serverless Stack
+# deploy_lambda         = true
+# deploy_api_gateway    = true
+# deploy_mongodb_atlas  = true
+# deploy_eks            = false
+# mongodb_atlas_org_id  = "your-org-id"
+# mongodb_password      = "your-password"
+
+# Example 4: Full Stack (All Modules)
+# deploy_eks            = true
+# deploy_ecs_cluster    = true
+# deploy_ecs_services   = true
+# deploy_rds            = true
+# deploy_alb            = true
+# deploy_lambda         = true
+# deploy_api_gateway    = true
+# deploy_redis          = true
+# deploy_cloudfront_s3  = true
+# deploy_mongodb_atlas  = true
+
+# Example 5: Just VPC and Security Groups
+# deploy_eks = false
+# All others = false

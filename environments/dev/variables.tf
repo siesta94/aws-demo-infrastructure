@@ -67,3 +67,76 @@ variable "lambda_source_code_hash" {
   type        = string
   default     = null
 }
+
+variable "mongodb_password" {
+  description = "MongoDB Password"
+  type        = string
+  default     = null
+}
+
+variable "mongodb_atlas_org_id" {
+  description = "MongoDB Atlas Organization ID"
+  type        = string
+  default     = ""
+}
+
+# Module Deployment Control
+variable "deploy_rds" {
+  description = "Deploy RDS Aurora module"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_alb" {
+  description = "Deploy Application Load Balancer module"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_ecs_cluster" {
+  description = "Deploy ECS Cluster module"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_ecs_services" {
+  description = "Deploy ECS Services"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_eks" {
+  description = "Deploy EKS Cluster module"
+  type        = bool
+  default     = true
+}
+
+variable "deploy_cloudfront_s3" {
+  description = "Deploy CloudFront + S3 module"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_lambda" {
+  description = "Deploy Lambda function module"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_api_gateway" {
+  description = "Deploy API Gateway module"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_redis" {
+  description = "Deploy ElastiCache Redis module"
+  type        = bool
+  default     = false
+}
+
+variable "deploy_mongodb_atlas" {
+  description = "Deploy MongoDB Atlas module"
+  type        = bool
+  default     = false
+}

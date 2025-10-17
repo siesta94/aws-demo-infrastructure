@@ -61,6 +61,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "frontend" {
     id     = "expire-old-versions"
     status = "Enabled"
 
+    filter {}
+
     noncurrent_version_expiration {
       noncurrent_days = var.noncurrent_version_expiration_days
     }
@@ -69,6 +71,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "frontend" {
   rule {
     id     = "transition-to-ia"
     status = var.enable_intelligent_tiering ? "Enabled" : "Disabled"
+
+    filter {}
 
     transition {
       days          = 30
@@ -227,6 +231,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "logs" {
   rule {
     id     = "expire-logs"
     status = "Enabled"
+
+    filter {}
 
     expiration {
       days = var.log_retention_days
