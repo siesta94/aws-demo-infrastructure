@@ -8,11 +8,13 @@ This infrastructure includes:
 
 - **VPC**: Multi-AZ VPC with public/private subnets, NAT gateways, and route tables
 - **ECS Cluster**: Fargate-based container orchestration with auto-scaling
+- **EKS Cluster**: Managed Kubernetes service with node groups and IRSA support
 - **Application Load Balancers**: For distributing traffic to ECS services
 - **CloudFront + S3**: CDN distribution for frontend static assets
 - **API Gateway**: RESTful API endpoints for serverless functions
 - **Lambda Functions**: Event-driven serverless compute
 - **RDS Aurora**: PostgreSQL-compatible cluster with read replicas
+- **ElastiCache Redis**: In-memory data store for caching and real-time use cases
 - **Security Groups**: Fine-grained network access control
 
 ## Project Structure
@@ -27,11 +29,15 @@ This infrastructure includes:
 │   ├── vpc/
 │   ├── security-groups/
 │   ├── rds-aurora/
+│   ├── ecs-cluster/
+│   ├── ecs-service/
 │   ├── ecs-fargate/
+│   ├── eks/
 │   ├── alb/
 │   ├── cloudfront-s3/
 │   ├── api-gateway/
-│   └── lambda/
+│   ├── lambda/
+│   └── elasticache-redis/
 ├── scripts/              # Helper scripts
 └── README.md
 ```
